@@ -22,6 +22,10 @@ jobs:
         pip uninstall -y google-generativeai
         pip install "google-generativeai==0.3.2" tweepy
 
+    - name: Check Gemini SDK version
+      run: pip show google-generativeai
+
+
 
     - name: Run tweet script
       env:
