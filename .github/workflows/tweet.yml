@@ -17,10 +17,9 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Uninstall and install dependencies
-      run: |
-        pip uninstall -y google-generativeai
-        pip install "google-generativeai==0.3.2" tweepy
+    - name: Install dependencies
+      run: pip install tweepy requests
+
 
     - name: Check Gemini SDK version
       run: pip show google-generativeai
