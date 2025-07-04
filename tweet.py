@@ -10,9 +10,7 @@ auth = tweepy.OAuth1UserHandler(
 api = tweepy.API(auth)
 
 genai.configure(
-    api_key=os.environ['GEMINI_API_KEY'],
-    transport='rest',
-    api_endpoint='https://generativelanguage.googleapis.com/v1'
+    api_key=os.environ['GEMINI_API_KEY']
 )
 
 model = genai.GenerativeModel("gemini-1.0-pro")
