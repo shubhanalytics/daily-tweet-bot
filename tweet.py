@@ -1,7 +1,7 @@
 import tweepy, os, datetime
 import google.generativeai as genai
 
-# Authenticate with X
+# X Auth
 auth = tweepy.OAuth1UserHandler(
     os.environ['CONSUMER_KEY'],
     os.environ['CONSUMER_SECRET'],
@@ -10,19 +10,17 @@ auth = tweepy.OAuth1UserHandler(
 )
 api = tweepy.API(auth)
 
-# Authenticate with Gemini
+# Gemini Auth
 genai.configure(api_key=os.environ['GEMINI_API_KEY'])
 model = genai.GenerativeModel("gemini-pro")
+chat = model.start_chat()
 
-# Generate tweet content
+prompt = f"Generate a short tweet under 280 characters for {datetime.date.today()} about data analytics, productivity, or mindset. Make it catchy and professional."
+
 try:
-    prompt = f"Generate a short tweet under 280 characters for {datetime.date.today()}, about data analytics or productivity."
-    response = model.generate_content(prompt)
-    print("Gemini says (raw):", response)
-
-
+    response = chat.send_message(prompt)
     tweet = response.text.strip()
+    print("Gemini responded with:", tweet)
     api.update_status(tweet)
-
 except Exception as e:
-    print(f"Error occurred: {e}")
+    print(f"Error occurred while tweeting: {e}")
