@@ -1,8 +1,7 @@
-import tweepy
-import datetime
-import os
+import tweepy, os, datetime
+import google.generativeai as genai
 
-# Authenticate securely via GitHub Secrets
+# X Auth
 auth = tweepy.OAuth1UserHandler(
     os.environ['CONSUMER_KEY'],
     os.environ['CONSUMER_SECRET'],
@@ -11,6 +10,14 @@ auth = tweepy.OAuth1UserHandler(
 )
 api = tweepy.API(auth)
 
-# Compose and post tweet
-tweet = f"Daily data tip for {datetime.datetime.now().strftime('%Y-%m-%d')}: Always visualize your distributions!"
+# Gemini Auth
+genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+model = genai.GenerativeModel('gemini-pro')
+
+# Generate tweet content
+prompt = f"Generate a short tweet under 280 characters for {datetime.date.today()}, related to data analytics, productivity, or growth mindset."
+response = model.generate_content(prompt)
+tweet = response.text.strip()
+
+# Post tweet
 api.update_status(tweet)
