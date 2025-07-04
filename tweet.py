@@ -12,7 +12,7 @@ api = tweepy.API(auth)
 
 # Authenticate with Gemini
 genai.configure(api_key=os.environ['GEMINI_API_KEY'])
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel(model_name="models/gemini-pro")
 
 # Generate tweet content
 try:
