@@ -17,8 +17,10 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install dependencies
-      run: pip install tweepy requests
+    - name: Install Gemini + Tweepy
+      run: |
+        pip install --no-cache-dir --upgrade "google-generativeai==0.3.2" tweepy
+
 
 
     - name: Check Gemini SDK version
