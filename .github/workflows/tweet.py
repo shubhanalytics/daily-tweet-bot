@@ -1,12 +1,13 @@
 import tweepy
 import datetime
+import os
 
-# Authenticate
+# Authenticate securely via GitHub Secrets
 auth = tweepy.OAuth1UserHandler(
-    consumer_key="your-consumer-key",
-    consumer_secret="your-consumer-secret",
-    access_token="your-access-token",
-    access_token_secret="your-access-secret"
+    os.environ['CONSUMER_KEY'],
+    os.environ['CONSUMER_SECRET'],
+    os.environ['ACCESS_TOKEN'],
+    os.environ['ACCESS_SECRET']
 )
 api = tweepy.API(auth)
 
