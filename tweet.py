@@ -15,7 +15,7 @@ genai.configure(
     api_endpoint='https://generativelanguage.googleapis.com/v1'
 )
 
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-1.0-pro")
 
 try:
     response = model.generate_content(
