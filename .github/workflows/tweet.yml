@@ -18,7 +18,8 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: pip install tweepy
+      run: pip install tweepy google-generativeai
+
 
     - name: Run tweet script
       env:
@@ -26,4 +27,6 @@ jobs:
         CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         ACCESS_SECRET: ${{ secrets.ACCESS_SECRET }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
       run: python tweet.py
