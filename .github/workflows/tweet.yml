@@ -18,7 +18,8 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: pip install tweepy google-generativeai
+      run: pip install --upgrade google-generativeai tweepy
+
 
 
     - name: Run tweet script
