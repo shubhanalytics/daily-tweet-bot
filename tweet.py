@@ -18,7 +18,8 @@ model = genai.GenerativeModel(model_name="models/gemini-pro")
 try:
     prompt = f"Generate a short tweet under 280 characters for {datetime.date.today()}, about data analytics or productivity."
     response = model.generate_content(prompt)
-    print("Gemini says:", response.text)
+    print("Gemini says (raw):", response)
+
 
     tweet = response.text.strip()
     api.update_status(tweet)
