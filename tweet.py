@@ -13,7 +13,10 @@ api = tweepy.API(auth)
 # Gemini Auth
 genai.configure(api_key=os.environ['GEMINI_API_KEY'])
 model = genai.GenerativeModel("gemini-pro")
-chat = model.start_chat()
+response = model.generate_content(
+    f"Generate a short tweet under 280 characters for {datetime.date.today()} about data analytics or productivity."
+)
+
 
 prompt = f"Generate a short tweet under 280 characters for {datetime.date.today()} about data analytics, productivity, or mindset. Make it catchy and professional."
 
