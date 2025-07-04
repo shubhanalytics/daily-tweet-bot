@@ -12,7 +12,7 @@ api = tweepy.API(auth)
 
 # Gemini REST API Call
 GEMINI_API_KEY = os.environ['GEMINI_API_KEY']
-API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent"
+API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent"
 
 prompt = f"Generate a short tweet under 280 characters for {datetime.date.today()} about data analytics, productivity, or growth mindset."
 
