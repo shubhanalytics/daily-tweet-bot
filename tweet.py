@@ -25,8 +25,4 @@ try:
     tweet = response.text.strip()
     api.update_status(tweet)
 except Exception as e:
-    print(f"Tweeting failed: {e}")
-
-
-except Exception as e:
-    print(f"Error occurred: {e}")
+    print(f"Error occurred while tweeting: {e}")
