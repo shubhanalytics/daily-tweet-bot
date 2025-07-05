@@ -27,9 +27,7 @@ try:
     print("⏳ Waiting before sending the Gemini API request...")
     time.sleep(5)  # ⬅️ Throttle delay to avoid hitting rate limits
 
-    response = requests.post(f"{API_URL}?key={GEMINI_API_KEY}", json=payload),
-    json=payload
-    )
+    response = requests.post(f"{API_URL}?key={GEMINI_API_KEY}", json=payload)
     response.raise_for_status()
     gemini_text = response.json()['candidates'][0]['content']['parts'][0]['text'].strip()
 
