@@ -31,8 +31,17 @@ try:
     response.raise_for_status()
     gemini_text = response.json()['candidates'][0]['content']['parts'][0]['text'].strip()
 
+    if len(gemini_text) > 280:
+    print("❌ Gemini response too long:", len(gemini_text), "characters")
+    exit(1)
+
+
     print("Gemini response:", gemini_text)
-    api.update_status(gemini_text)
+    response = api.update_status(gemini_text)
+    print("Tweet posted with ID:", response.id)
+
 
 except Exception as e:
     print("Error occurred while tweeting:", e)
+    exit(1)  # ✅ This signals failure to GitHub Actions
+
