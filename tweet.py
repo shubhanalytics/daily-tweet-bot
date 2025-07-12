@@ -32,8 +32,8 @@ try:
     gemini_text = response.json()['candidates'][0]['content']['parts'][0]['text'].strip()
 
     if len(gemini_text) > 280:
-    print("❌ Gemini response too long:", len(gemini_text), "characters")
-    exit(1)
+        print("❌ Gemini response too long:", len(gemini_text), "characters")
+        exit(1)
 
 
     print("Gemini response:", gemini_text)
