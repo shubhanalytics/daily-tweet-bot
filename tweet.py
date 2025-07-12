@@ -22,12 +22,25 @@ payload = {
         {"parts": [{"text": prompt}]}
     ]
 }
+# Retry setup for Gemini API
+session = requests.Session()
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
+retry_strategy = Retry(
+    total=5,
+    backoff_factor=2,
+    status_forcelist=[429, 500, 502, 503, 504],
+    allowed_methods=["POST"]
+)
+adapter = HTTPAdapter(max_retries=retry_strategy)
+session.mount("https://", adapter)
 
 try:
     print("⏳ Waiting before sending the Gemini API request...")
     time.sleep(5)  # ⬅️ Throttle delay to avoid hitting rate limits
 
-    response = requests.post(f"{API_URL}?key={GEMINI_API_KEY}", json=payload)
+    response = session.post ( f"{API_URL}?key={GEMINI_API_KEY}" , json=payload )
     response.raise_for_status()
     gemini_text = response.json()['candidates'][0]['content']['parts'][0]['text'].strip()
 
