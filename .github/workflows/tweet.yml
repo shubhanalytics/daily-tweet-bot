@@ -1,41 +1,32 @@
-name: Daily Tweet
+name: Daily Tweet Bot
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Runs daily at 6 AM UTC
-  workflow_dispatch:
+    - cron: '0 6 * * *'  # Runs daily at 6 AM UTC (11:30 AM IST)
+  workflow_dispatch:      # Manual trigger
 
 jobs:
   tweet:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Install Gemini + Tweepy
-      run: |
-        pip install --no-cache-dir --upgrade "google-generativeai==0.3.2" tweepy
+      - name: Install dependencies
+        run: pip install --no-cache-dir tweepy
 
-
-
-    - name: Check Gemini SDK version
-      run: pip show google-generativeai
-
-
-
-    - name: Run tweet script
-      env:
-        CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
-        CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        ACCESS_SECRET: ${{ secrets.ACCESS_SECRET }}
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      run: |
-        echo "Running tweet script..."
-        python tweet.py || echo "Tweet script failed with exit code $?"
-
+      - name: Run tweet script
+        env:
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
+          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+        run: |
+          echo "📡 Running daily tweet script..."
+          python tweet.py || echo "⚠️ Tweet script failed with exit code $?"
