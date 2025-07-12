@@ -20,13 +20,8 @@ tweet_text = random.choice(lines)
 print("📢 Selected tweet:", tweet_text)
 
 # --- Twitter API Authentication (OAuth2)
-client = tweepy.Client(
-    bearer_token=os.environ['TWITTER_BEARER_TOKEN'],
-    consumer_key=os.environ['TWITTER_CLIENT_ID'],
-    consumer_secret=os.environ['TWITTER_CLIENT_SECRET'],
-    access_token=os.environ['TWITTER_ACCESS_TOKEN'],
-    access_token_secret=os.environ['TWITTER_ACCESS_SECRET']
-)
+client = tweepy.Client(bearer_token=os.environ['TWITTER_BEARER_TOKEN'])
+
 
 # --- Post Tweet via API v2 ---
 try:
