@@ -17,19 +17,38 @@ if not lines:
 
 # --- Select Random Tweet ---
 tweet_text = random.choice(lines)
-print("📢 Selected tweet:", tweet_text)
+print("📣 Selected tweet:", tweet_text)
 
-# --- Twitter API Authentication (OAuth2)
-client = tweepy.Client(bearer_token=os.environ['TWITTER_BEARER_TOKEN'])
+# --- Fetch Environment Variables ---
+required_keys = [
+    "TWITTER_CONSUMER_KEY",
+    "TWITTER_CONSUMER_SECRET",
+    "TWITTER_ACCESS_TOKEN",
+    "TWITTER_ACCESS_TOKEN_SECRET"
+]
 
+missing = [k for k in required_keys if not os.getenv(k)]
+if missing:
+    print(f"🚨 Missing environment variables: {', '.join(missing)}")
+    exit(1)
 
-# --- Post Tweet via API v2 ---
+# --- Authenticate via OAuth1 ---
+auth = tweepy.OAuth1UserHandler(
+    os.getenv("TWITTER_CONSUMER_KEY"),
+    os.getenv("TWITTER_CONSUMER_SECRET"),
+    os.getenv("TWITTER_ACCESS_TOKEN"),
+    os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+)
+
+api = tweepy.API(auth)
+
+# --- Post Tweet ---
 try:
-    response = client.create_tweet(text=tweet_text)
-    tweet_id = response.data['id']
-    print(f"✅ Tweet posted successfully at {datetime.now()}. Tweet ID: {tweet_id}")
+    response = api.update_status(status=tweet_text)
+    tweet_id = response.id_str
+    print(f"✅ Tweet posted at {datetime.now()}. Tweet ID: {tweet_id}")
 
-    # Optional: archive tweet
+    # --- Optional: Archive Tweet ---
     with open("archive.txt", "a", encoding="utf-8") as log:
         log.write(f"{datetime.now()}: {tweet_text} → {tweet_id}\n")
 
